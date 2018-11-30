@@ -7,53 +7,27 @@ function show_selected_id(id) {
 	var value = selector[selector.selectedIndex].value;
 	return value;
 }
-
 // trả về danh sách các khối
 function send_data() {
 	var id_school = show_selected_id('selector');
-	$.ajax({
-		url: 'data/getAcademics',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
+	$.post("public/data.php",
+		{
 			id_school: id_school
 		},
-		success: function(data){
-			console.log("Du lieu: " + data);
+		function (data) {
 			document.getElementById("academic").innerHTML = data;
-		}
-	});
-	// $.get("data/getAcademics",
-	// {
-	// 	id_school: id_school
-	// },
-	// function (data) {
-
-	// 	document.getElementById("academic").innerHTML = data;
-	// });
+		});
 }
 
 function send_year() {
 	var id_school = show_selected_id('selector');
-	$.ajax({
-		url: 'data/getYear',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
+	$.post("public/data.php",
+		{
 			id_school_year: id_school
 		},
-		success: function(data){
+		function (data) {
 			document.getElementById("academic").innerHTML = data;
-		}
-	});
-
-	// $.post("app/Http/Controllers/data.php",
-	// {
-	// 	id_school_year: id_school
-	// },
-	// function (data) {
-	// 	document.getElementById("academic").innerHTML = data;
-	// });
+		});
 
 }
 
@@ -61,19 +35,16 @@ function send_data_class() {
 	var id_school = show_selected_id('selector');
 	var id_academic = show_selected_id('academic');
 
-	$.ajax({
-		url: 'data/getClass',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
+	$.post("public/data.php",
+		{
 			id_school: id_school,
 			id_academic: id_academic
 		},
-		success: function(data){
-			
+		function (data) {
+			console.log("Danh sách lớp học:" + data);
 			document.getElementById("class").innerHTML = data;
-		}
-	});
+		});
+
 	var year = document.getElementById('academic').options[document.getElementById('academic').selectedIndex].text;
 	var year_first = year.substring(5, 9);
 	var year_last = year.substring(12, 16);
@@ -91,18 +62,13 @@ function getClassChart() {
 	var id_school = show_selected_id('selector');
 	var id_academic = show_selected_id('academic');
 	var id_class = show_selected_id('class');
-
-	$.ajax({
-		url: 'data/getClassEyesight',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
+	$.post("public/data.php",
+		{
 			schoolID: id_school,
 			academicID: id_academic,
 			classID: id_class
 		},
-		success: function(data){
-			console.log("class chart: " + data.length);
+		function (data) {
 			if (data.length == 0) {
 				resetCanvas("Không có dữ liệu");
 			}
@@ -128,16 +94,13 @@ function getClassChart() {
 				eyesight = eyesight.sort();
 				for (var i = 0; i < eyesight.length; i++) {
 					$.ajax({
-						 url: 'data/getEyesight',
-						//url: '../data.php',
-						dataType: 'json',
+						url: 'public/data.php',
 						data: {
 							check: eyesight[i] // gửi dữ liệu lên server
 						},
 						async: false,
-						type: 'GET',
+						type: 'POST',
 						success: function (response) {
-							console.log("số lượng lớp học:" + response.length);
 							var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
 							percent.push(phantram); // thêm vào mảng 
 						}
@@ -181,9 +144,9 @@ function getClassChart() {
 							callbacks: {
 								label: function (tooltipItems, data) {
 									return " Độ cận " + data.labels[tooltipItems.index] +
-									" : " +
-									data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
-									'%';
+										" : " +
+										data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
+										'%';
 								}
 							}
 						}
@@ -191,103 +154,8 @@ function getClassChart() {
 				});
 
 			}
-		}
-	});
 
-	// $.post("public/data.php",
-	// {
-	// 	schoolID: id_school,
-	// 	academicID: id_academic,
-	// 	classID: id_class
-	// },
-	// function (data) {
-	// 	if (data.length == 0) {
-	// 		resetCanvas("Không có dữ liệu");
-	// 	}
-	// 	else {
-	// 		resetCanvas("");
-	// 			var eyesight = []; // tổng hợp độ cận
-	// 			var percent = []; // tính phần trăm
-	// 			for (var i in data) {
-	// 				var dem = 0;
-	// 				for (var j = eyesight.length - 1; j >= 0; j--) {
-
-	// 					if (eyesight[j] == data[i].eyesight_diopter) // kiểm tra độ cận đã có trong mảng
-	// 					{
-	// 						dem++;
-	// 						break;// nếu đã có trong mảng thì thoát vòng lặp
-	// 					}
-	// 				}
-	// 				if (dem == 0) // nếu chưa có trong mảng
-	// 				{
-	// 					eyesight.push(data[i].eyesight_diopter);// thêm vào mảng
-	// 				}
-	// 			}
-	// 			eyesight = eyesight.sort();
-	// 			for (var i = 0; i < eyesight.length; i++) {
-	// 				$.ajax({
-	// 					url: 'public/data.php',
-	// 					data: {
-	// 						check: eyesight[i] // gửi dữ liệu lên server
-	// 					},
-	// 					async: false,
-	// 					type: 'POST',
-	// 					success: function (response) {
-	// 						var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
-	// 						percent.push(phantram); // thêm vào mảng 
-	// 					}
-	// 				});
-	// 			}
-
-
-
-	// 			var graphTarget = document.getElementById("pie-chart").getContext("2d");
-
-	// 			graphTarget = new Chart(graphTarget, {
-	// 				type: 'pie',
-	// 				data: {
-	// 					labels: eyesight,
-	// 					datasets: [{
-	// 						label: "Hello",
-	// 						backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#ff9f40", "#ff6384", "#3f51b5", "#79df29", "#607926", "#cddc39"],
-	// 						data: percent
-
-	// 					}]
-	// 				},
-	// 				options: {
-	// 					title: {
-	// 						display: true,
-	// 						text: 'Biểu đồ độ cận của lớp học'
-	// 					},
-	// 					plugins: {
-	// 						datalabels: {
-	// 							color: 'white',
-	// 							font: {
-	// 								size: '15'
-	// 							},
-	// 							align: 'end',
-	// 							formatter: function (value, context) {
-	// 								return value + '%';
-	// 							}
-	// 						}
-
-	// 					},
-	// 					tooltips: {
-	// 						callbacks: {
-	// 							label: function (tooltipItems, data) {
-	// 								return " Độ cận " + data.labels[tooltipItems.index] +
-	// 								" : " +
-	// 								data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
-	// 								'%';
-	// 							}
-	// 						}
-	// 					}
-	// 				}
-	// 			});
-
-	// 		}
-
-	// 	});
+		});
 
 };
 
@@ -312,17 +180,13 @@ function getStudentChart() {
 	var student_code = $("#student_code").val();
 	var school_id = show_selected_id("selector");
 
-	$.ajax({
-		url: 'data/student-eyesight',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
+	$.post("public/data.php",
+		{
 			student_code: student_code,
 			school_id: school_id
+
 		},
-		success: function(data)
-		{
-			console.log("Đây là của 1 học sinh: " + data);
+		function (data) {
 			var eyesight = [];
 			var year = [];
 			var name = [];
@@ -393,8 +257,8 @@ function getStudentChart() {
 				}
 			});
 
-		}
-	});
+
+		});
 };
 
 //trả về danh sách các lớp của khối
