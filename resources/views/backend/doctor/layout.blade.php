@@ -6,6 +6,7 @@
     margin-bottom: 0 !important;
 }
 </style>
+@extends('backend.logout')
 @section('content')
 <div class="content">
 	<div class="container-fluid">
