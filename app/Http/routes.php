@@ -15,13 +15,16 @@
 Route::get('/', function () {
 	return view('fontend.home');
 });
+Route::auth();
 
+Route::get('/home', 'HomeController@index');
 
-
+Route::post('/postLogin',['as'=>'postLogin','uses' => "Auth\AuthController@postLogin"]);
 
 // Phần Doctor
 Route::group(['prefix' => 'doctor'], function () {
-	Route::get('/', "backend\Doctor\DoctorController@index");
+	Route::get('/',['as'=>'doctor.index','uses' => "backend\Doctor\DoctorController@index"]);
+	//Route::get('/', "backend\Doctor\DoctorController@index");
 	Route::get('/student-one', "Backend\Doctor\DoctorController@studentOne");
 	Route::get('/class-one', "Backend\Doctor\DoctorController@classOne");
 
@@ -41,12 +44,10 @@ Route::group(['prefix' => 'doctor'], function () {
 
 
 
-Route::resource('hocsinh', "HocSinhController");
+//Route::resource('hocsinh', "HocSinhController");
 
-Route::auth();
 
-Route::get('/home', 'HomeController@index');
 
 Route::get('/hash', function () {
-	return Hash::make(12345);
+	return Hash::make(123456);
 });

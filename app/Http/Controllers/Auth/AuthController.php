@@ -7,7 +7,9 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Validator;
-
+use App\Http\Requests\LoginRequest;
+use Auth;
+use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /*
@@ -29,8 +31,6 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-    protected $username = 'username';
-
     /**
      * Create a new authentication controller instance.
      *
@@ -69,5 +69,20 @@ class AuthController extends Controller
             'acc_username' => $data['email'],
             'acc_password' => bcrypt($data['password']),
         ]);
+    }
+
+
+    public function postLogin(LoginRequest $request)
+    {
+        $user = array(
+            'acc_username' => $request->acc_username,
+            'acc_password' => $request->acc_password
+        );
+        if (Auth::attempt($user)) {
+            return redirect()->route('doctor.index');
+        }
+         else {
+            return redirect()->back();
+        }  
     }
 }

@@ -13,9 +13,9 @@ class User extends Authenticatable
      */
     protected $table = "tbl_account";
     protected $fillable = [
-        'acc_username','acc_code', 'acc_password',
-    ];
-    public $timestamps = false;
+       'acc_username','acc_code', 'acc_password'
+   ];
+   public $timestamps = false;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -23,6 +23,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'acc_password','acc_id'
-    ];
+       'acc_password'
+   ];
+
+
+   public function getAuthPassword()
+   {
+        return $this->acc_password;
+    }
 }

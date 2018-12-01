@@ -24,16 +24,16 @@ class LoginRequest extends Request
     public function rules()
     {
         return [
-            'username' => 'required',
-            'password' => 'required'
+            'acc_username' => 'required',
+            'acc_password' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'username.required' => 'Username không được bỏ trống!',
-            'password.required' => 'Password không được bỏ trống!'
+            'acc_username.required' => 'Username không được bỏ trống!',
+            'acc_password.required' => 'Password không được bỏ trống!'
         ];
     }
 }
