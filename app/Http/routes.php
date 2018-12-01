@@ -12,7 +12,7 @@
  */
 
 Route::get('/', function () {
-    return view('fontend.home');
+    return view('frontend.home');
 });
 Route::auth();
 
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'doctor'], function () {
 // Phần frontend
 
 Route::get('/tra-cuu', ['as' => 'tra-cuu', 'uses' => "Backend\Doctor\DoctorController@studentOneFrontend"]);
-
+Route::get('data/student-eyesight', ['as' => 'getStudentEyesight', 'uses' => "Backend\DataController@getStudentEyesight"]);
 
 //Route::resource('hocsinh', "HocSinhController");
 

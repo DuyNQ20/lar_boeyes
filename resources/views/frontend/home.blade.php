@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
 <title>Trang chủ</title>
 <meta charset="utf-8">
 <meta name="format-detection" content="telephone=no" />
 <link rel="icon" href="{{ asset('public/images/favicon.ico') }}">
 <link rel="shortcut icon" href="{{ asset('public/images/favicon.ico') }}" />
-<link rel="stylesheet" href="{{ asset('public/fontend/css/style.css') }} ">
-<link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/grid.css') }} ">
-<link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/font-awesome.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('public/fontend/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/frontend/css/style.css') }} ">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/css/grid.css') }} ">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/css/font-awesome.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/css/bootstrap.min.css') }}">
 </head>
 <body class="page1" id="top">
 <!--==============================
@@ -22,7 +22,7 @@
       <div class="grid_12 rel">
         <h1>
           <a href="index.html">
-            <img src="{{ asset('public/fontend/images/2.png') }}" alt="Logo alt" height="67">
+            <img src="{{ asset('public/frontend/images/2.png') }}" alt="Logo alt" height="67">
           </a>
         </h1>
       </div>
@@ -39,20 +39,20 @@
             <nav>
               <ul class="sf-menu">
                <li><a href="index.html">Trang chủ</a></li>
-               <li><a href="{!! route('tra-cuu') !!}">Tra cứu</a></li>               
+               <li><a href="{!! route('tra-cuu') !!}">Tra cứu</a></li>
                <li><a href="#">Kiến thức</a></li>
                <li><a href="ContactFrom_v1/index.html">Liên hệ</a></li>
                <li><a href="{{ asset('login') }}">Đăng nhập</a></li>
              </ul>
             </nav>
             <div class="clear"></div>
-          </div>       
-         <div class="clear"></div>  
+          </div>
+         <div class="clear"></div>
         </div>
-     </div> 
-    </div> 
+     </div>
+    </div>
   </section>
-  
+
   <section class="page1_header">
     <div class="container">
       <div class="row">
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="grid_3">
         <div class="block-1_count"></div>
-        Được ứng dụng<br> trong nhiều năm <br> 
+        Được ứng dụng<br> trong nhiều năm <br>
         <div class="clear"></div>
       </div>
       <div class="grid_3">
@@ -111,8 +111,8 @@
         <div class="greet">
           <h4 class="head__1">
             Cận thị học đường: thực trạng đáng báo động
-            
-          </h4>     
+
+          </h4>
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
       </div>
     </div>
   </article>
-  
+
   <div class="container">
     <div class="row">
       <div class="grid_5">
@@ -173,7 +173,7 @@
         <img src="public/frontend/images/page1_img3.jpg" alt="" class="img_inner fleft">
           <p>Curabitur vel lorem sit amet nulla ullamcorper fermentum In vitae dert arius augue, eu consectetur </p>
           <p class="offset__1">Eligulaam dui eros dertolisce dertolo adipiscing quam id risus sagittis</p>
-          Curabitur vel lorem sit amet nulla ullamcorper fermentum In vitae dert rius augue, eu consectetur larem dui eros dertolisce dertolo 
+          Curabitur vel lorem sit amet nulla ullamcorper fermentum In vitae dert rius augue, eu consectetur larem dui eros dertolisce dertolo
       </div>
       <div class="grid_4">
         <h4>Solutions</h4>
@@ -206,12 +206,12 @@
 <footer id="footer">
   <div class="container">
     <div class="row">
-      <div class="grid_12"> 
+      <div class="grid_12">
         <div class="copyright"><span class="brand">Nhóm 5 KTPM5 - K10</span> &copy; <span id="copyright-year"></span> | <a href="#">Privacy Policy</a>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </footer>
 <a href="#" id="toTop" class="fa fa-chevron-up"></a>
 </body>
