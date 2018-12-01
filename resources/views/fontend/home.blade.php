@@ -39,7 +39,7 @@
             <nav>
               <ul class="sf-menu">
                <li><a href="index.html">Trang chủ</a></li>
-               <li><a href="TraCuu.html">Tra cứu</a></li>               
+               <li><a href="{!! route('tra-cuu') !!}">Tra cứu</a></li>               
                <li><a href="#">Kiến thức</a></li>
                <li><a href="ContactFrom_v1/index.html">Liên hệ</a></li>
                <li><a href="{{ asset('login') }}">Đăng nhập</a></li>

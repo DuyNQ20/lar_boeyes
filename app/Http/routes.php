@@ -38,6 +38,14 @@ Route::group(['prefix' => 'doctor'], function () {
 
 });
 
+
+
+
+// Phần frontend
+
+Route::get('/tra-cuu', ['as' => 'tra-cuu', 'uses' => "Backend\Doctor\DoctorController@studentOneFrontend"]);
+
+
 //Route::resource('hocsinh', "HocSinhController");
 
 Route::get('/hash', function () {

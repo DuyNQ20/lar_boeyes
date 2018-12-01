@@ -25,4 +25,12 @@ class DoctorController extends Controller
         $schools = DB::table('tbl_school')->select('school_id', 'school_name')->get();
     	return view("backend.doctor.class", compact("schools"));
     }
+
+
+    // ------- Phần frontend -----------
+    public function studentOneFrontend()
+    {
+        $schools = DB::table('tbl_school')->select('school_id', 'school_name')->get();
+        return view("fontend.student", compact("schools"));
+    }
 }
