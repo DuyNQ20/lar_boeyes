@@ -47,9 +47,9 @@ class DataController extends Controller
 
 	public function getClass(request $request)
 	{
-		$string = "<option value='0'>All</option>";
+		$string = "";
 		$class = DB::table('tbl_class')
-		->join('tbl_academicYear', 'tbl_academicyear.school_id','=','tbl_class.school_id')
+		->join('tbl_academicyear', 'tbl_academicyear.school_id','=','tbl_class.school_id')
 		->where([
 			['tbl_class.school_id', '=', $request->id_school],
 			['tbl_academicyear.academicYear_id', '=', $request->id_academic]
@@ -95,20 +95,12 @@ class DataController extends Controller
 		// 	//echo json_encode($ClassEyesight);
 		// }
 
-		if(($request->classID) == 0)
-		{
-			$ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
-                        INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
-                        INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
-                        WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID");
-		}
-		else
-		{
-			$ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
-                        INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
-                        INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
-                        WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID AND tbl_eyesight.class_id= $request->classID");
-		}
+		
+		$ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
+			INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
+			INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
+			WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID AND tbl_eyesight.class_id= $request->classID");
+		
 		echo json_encode($ClassEyesight);
 	}
 

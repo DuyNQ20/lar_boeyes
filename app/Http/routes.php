@@ -11,43 +11,35 @@
 |
  */
 
-
 Route::get('/', function () {
-	return view('fontend.home');
+    return view('fontend.home');
 });
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::post('/postLogin',['as'=>'postLogin','uses' => "Auth\AuthController@postLogin"]);
+Route::post('/postLogin', ['as' => 'postLogin', 'uses' => "Auth\AuthController@postLogin"]);
 
 // Phần Doctor
 Route::group(['prefix' => 'doctor'], function () {
-	Route::get('/',['as'=>'doctor.index','uses' => "backend\Doctor\DoctorController@index"]);
-	//Route::get('/', "backend\Doctor\DoctorController@index");
-	Route::get('/student-one', "Backend\Doctor\DoctorController@studentOne");
-	Route::get('/class-one', "Backend\Doctor\DoctorController@classOne");
+    Route::get('/', ['as' => 'doctor.index', 'uses' => "Backend\Doctor\DoctorController@index"]);
+    Route::get('/student-one', "Backend\Doctor\DoctorController@studentOne");
+    Route::get('/class-one', "Backend\Doctor\DoctorController@classOne");
 
-	// Phần get dữ liệu vào combox
-	Route::group(['prefix' => 'data'], function () {
-		Route::get('/schools', "Backend\DataController@getSchools");
-		Route::get('/student-eyesight',['as'=>'getStudentEyesight','uses' => "Backend\DataController@getStudentEyesight"]);
-		Route::get('/getAcademics', "Backend\DataController@getAcademics");
-		Route::get('/getClass', "Backend\DataController@getClass");
-		Route::get('/getClassEyesight', "Backend\DataController@getClassEyesight");
-		Route::get('/getEyesight', "Backend\DataController@getEyesight");
-	});
-
+    // Phần get dữ liệu vào combox
+    Route::group(['prefix' => 'data'], function () {
+        Route::get('/schools', "Backend\DataController@getSchools");
+        Route::get('/student-eyesight', ['as' => 'getStudentEyesight', 'uses' => "Backend\DataController@getStudentEyesight"]);
+        Route::get('/getAcademics', "Backend\DataController@getAcademics");
+        Route::get('/getClass', "Backend\DataController@getClass");
+        Route::get('/getClassEyesight', "Backend\DataController@getClassEyesight");
+        Route::get('/getEyesight', "Backend\DataController@getEyesight");
+    });
 
 });
 
-
-
-
 //Route::resource('hocsinh', "HocSinhController");
 
-
-
 Route::get('/hash', function () {
-	return Hash::make(123456);
+    return Hash::make(234567);
 });

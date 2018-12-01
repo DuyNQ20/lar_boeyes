@@ -11,40 +11,28 @@ function show_selected_id(id) {
 function send_data() {
 	var id_school = show_selected_id('selector');
 	$.post("public/data.php",
-		{
-			id_school: id_school
-		},
-		function (data) {
-			document.getElementById("academic").innerHTML = data;
-		});
+	{
+		id_school: id_school
+	},
+	function (data) {
+		document.getElementById("academic").innerHTML = data;
+	});
 }
 
 function send_year() {
 	var id_school = show_selected_id('selector');
 	$.post("public/data.php",
-		{
-			id_school_year: id_school
-		},
-		function (data) {
-			document.getElementById("academic").innerHTML = data;
-		});
+	{
+		id_school_year: id_school
+	},
+	function (data) {
+		document.getElementById("academic").innerHTML = data;
+	});
 
 }
 
-function send_data_class() {
-	var id_school = show_selected_id('selector');
-	var id_academic = show_selected_id('academic');
-
-	$.post("public/data.php",
-		{
-			id_school: id_school,
-			id_academic: id_academic
-		},
-		function (data) {
-			console.log("Danh sách lớp học:" + data);
-			document.getElementById("class").innerHTML = data;
-		});
-
+function get_year()
+{
 	var year = document.getElementById('academic').options[document.getElementById('academic').selectedIndex].text;
 	var year_first = year.substring(5, 9);
 	var year_last = year.substring(12, 16);
@@ -57,23 +45,40 @@ function send_data_class() {
 	console.log("Năm finish:" + year_last);
 }
 
+function send_data_class() {
+	var id_school = show_selected_id('selector');
+	var id_academic = show_selected_id('academic');
+
+	$.post("public/data.php",
+	{
+		id_school: id_school,
+		id_academic: id_academic
+	},
+	function (data) {
+		console.log("Danh sách lớp học:" + data);
+		document.getElementById("class").innerHTML = data;
+	});
+
+	
+}
+
 function getClassChart() {
 
 	var id_school = show_selected_id('selector');
 	var id_academic = show_selected_id('academic');
 	var id_class = show_selected_id('class');
 	$.post("public/data.php",
-		{
-			schoolID: id_school,
-			academicID: id_academic,
-			classID: id_class
-		},
-		function (data) {
-			if (data.length == 0) {
-				resetCanvas("Không có dữ liệu");
-			}
-			else {
-				resetCanvas("");
+	{
+		schoolID: id_school,
+		academicID: id_academic,
+		classID: id_class
+	},
+	function (data) {
+		if (data.length == 0) {
+			resetCanvas("Không có dữ liệu");
+		}
+		else {
+			resetCanvas("");
 				var eyesight = []; // tổng hợp độ cận
 				var percent = []; // tính phần trăm
 				for (var i in data) {
@@ -144,9 +149,9 @@ function getClassChart() {
 							callbacks: {
 								label: function (tooltipItems, data) {
 									return " Độ cận " + data.labels[tooltipItems.index] +
-										" : " +
-										data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
-										'%';
+									" : " +
+									data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
+									'%';
 								}
 							}
 						}
@@ -181,12 +186,17 @@ function getStudentChart() {
 	var school_id = show_selected_id("selector");
 
 	$.post("public/data.php",
-		{
-			student_code: student_code,
-			school_id: school_id
+	{
+		student_code: student_code,
+		school_id: school_id
 
-		},
-		function (data) {
+	},
+	function (data) {
+		if (data.length == 0) {
+			resetCanvas("Không có dữ liệu");
+		}
+		else {
+			resetCanvas("");
 			var eyesight = [];
 			var year = [];
 			var name = [];
@@ -257,8 +267,10 @@ function getStudentChart() {
 				}
 			});
 
+		}
+		
 
-		});
+	});
 };
 
 //trả về danh sách các lớp của khối

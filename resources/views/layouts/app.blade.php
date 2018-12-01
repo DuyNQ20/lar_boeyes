@@ -10,6 +10,8 @@
 </head>
 <body>
 @yield('content')
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </body>
 </html>
 

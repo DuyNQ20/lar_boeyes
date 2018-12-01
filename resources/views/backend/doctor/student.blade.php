@@ -3,7 +3,7 @@
 <!-- bang bieu do -->
 <div class="panel panel-primary" >
 	<div class="panel panel-heading boxheader"> 
-	Biểu diễn độ cận thị của học sinh HELLO</div>
+	Biểu diễn độ cận thị của học sinh</div>
 	<div class="panel panel-body">
 		<div class="seach-school">
 			<form class="form-horizontal"  method="POST"  >

@@ -32,14 +32,15 @@
 					</div>
 				</div>
 				<div class="form-group col-md-6">
-					<label class="control-label col-md-4">Chọn năm:</label>
+					{{-- <label class="control-label col-md-4">Chọn năm:</label>
 					<div class="col-md-8">
 						<select class="form-control col-md-12" id="year">
 						</select>
-					</div>
+					</div> --}}
 				</div>
-				<div class="form-group col-md-6">
-					<input  type="button" onclick="getClassChart()" class="btn btn-primary col-md-2" value="Xem" name="">
+				<div class="form-group col-md-12 ">
+					<div class="col-md-2"></div>
+					<input   type="button" onclick="getClassChart()" class="btn btn-primary col-md-2" value="Xem" name="">
 				</div>
 
 			</form>
