@@ -25,6 +25,17 @@ function send_data() {
 	});
 }
 
+function getFirstYear()
+{
+	var year = document.getElementById('academic').options[document.getElementById('academic').selectedIndex].text;
+	return year.substring(5, 9);
+}
+function getLastYear()
+{
+	var year = document.getElementById('academic').options[document.getElementById('academic').selectedIndex].text;
+	return year.substring(12, 16);
+}
+
 function getYear()
 {
 	var year = document.getElementById('academic').options[document.getElementById('academic').selectedIndex].text;
@@ -168,7 +179,159 @@ function getClassChart() {
 			}
 		}
 	});
-};
+}
+
+
+
+// ------------------ Class many years --------------------
+function getClassManyYearsChart() {
+	var id_school = show_selected_id('selector');
+	var id_academic = show_selected_id('academic');
+	var id_class = show_selected_id('class');
+	var year = [];
+	var year_first = getFirstYear();
+	var year_last = getLastYear();
+
+	for(var i = year_first; i < year_last; i++)
+	{
+		year.push(i + '-' + ( parseInt(i)+1));
+	}
+	console.log("năm: " + year);
+	for (var j = 0; j < year.length; j++) {
+		
+		$.ajax({
+			url: 'data/getClassManyEyesight',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			data: { 
+				schoolID: id_school,
+				academicID: id_academic,
+				classID: id_class,
+				class_year: year[j]
+			},
+			success: function(data){
+				console.log("du lieu data: " + data.length);
+				resetCanvas("", "chart-container", "line-chart");
+				var eyesight = [];
+				var percent = [];
+				var dem = 0; 
+				for (var i in data) {
+					var dem = 0;
+					for (var j = eyesight.length - 1; j >= 0; j--) {
+
+						if (eyesight[j] == data[i].eyesight_diopter) // kiểm tra độ cận đã có trong mảng
+						{
+							dem++;
+							break;// nếu đã có trong mảng thì thoát vòng lặp
+						}
+					}
+					if (dem == 0) // nếu chưa có trong mảng
+					{
+						eyesight.push(data[i].eyesight_diopter);// thêm vào mảng
+					}
+				}
+				eyesight = eyesight.sort();
+				for (var j = 0; j < year.length; j++) {
+					for (var i = 0; i < eyesight.length; i++) {
+						$.ajax({
+							url: 'data/getClassManyYearsEyesight',
+							dataType: 'json',
+							data: {
+							check: eyesight[i], // gửi dữ liệu lên server
+							classID: id_class, 
+							class_year: year[j]
+						},
+						async: false,
+						type: 'GET',
+						success: function (response) {
+							console.log("eyesight: " + response.length);
+							var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
+							percent.push(phantram); // thêm vào mảng 
+						}
+					});
+					}
+				}
+				
+			// for (var i in data) {
+
+			// 	if (dem < 1) {
+			// 		name.push(data[i].stu_name);
+			// 		dem++;
+			// 	}
+
+			// 	eyesight.push(data[i].eyesight_diopter);
+			// 	year.push(data[i].eyesight_date);
+
+			// }
+			var dulieu = [];
+			var backgroundColor = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#ff9f40", "#ff6384", "#3f51b5", "#79df29", "#607926", "#cddc39"];
+			for (var i = 0; i < year.length; i++) {
+				var mang = {
+					'label': year[i], 
+					'backgroundColor': backgroundColor[i],
+					'borderColor': backgroundColor[i],
+					'hoverBackgroundColor': '#CCCCCC',
+					'hoverBorderColor': '#666666',
+					'fill' : false,
+					'data': percent
+				};
+
+				dulieu.push(mang);
+			}
+			
+
+			var chartdata = {
+				labels: eyesight,
+				datasets: dulieu
+			};
+
+
+
+			var graphTarget = $("#line-chart");
+
+			barGraph = new Chart(graphTarget, {
+				type: 'line',
+				data: chartdata,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Biểu đồ độ cận'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					hover: {
+						mode: 'nearest',
+						intersect: true
+					},
+					scales: {
+						xAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: 'Năm'
+							}
+						}],
+						yAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: 'Độ cận'
+							}
+						}]
+					}
+				}
+			});
+		}
+
+	});
+	}
+
+	
+}
 
 // Distroy old Canvas
 function resetCanvas(text, graph_text, chart_text) {
@@ -183,7 +346,7 @@ function resetCanvas(text, graph_text, chart_text) {
 	ctx.font = '30pt Verdana';
 	ctx.textAlign = 'left';
 	ctx.fillText(text, x, y);
-};
+}
 
 
 
@@ -210,11 +373,10 @@ function getStudentChart() {
 			else
 			{
 				resetCanvas("", "chart-container", "line-chart");
-				console.log("Đây là của 1 học sinh: " + data);
 				var eyesight = [];
 				var year = [];
 				var name = [];
-				var dem = 0; console.log("du lieu: " + data);
+				var dem = 0; 
 				for (var i in data) {
 
 					if (dem < 1) {
@@ -285,7 +447,7 @@ function getStudentChart() {
 
 		}
 	});
-};
+}
 
 //trả về danh sách các lớp của khối
 function send_data_academic()
