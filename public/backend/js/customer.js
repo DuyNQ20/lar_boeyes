@@ -33,29 +33,7 @@ function send_data() {
 	// });
 }
 
-function send_year() {
-	var id_school = show_selected_id('selector');
-	$.ajax({
-		url: 'data/getYear',
-		type: 'GET',
-		dataType: 'json',
-		data: { 
-			id_school_year: id_school
-		},
-		success: function(data){
-			document.getElementById("academic").innerHTML = data;
-		}
-	});
 
-	// $.post("app/Http/Controllers/data.php",
-	// {
-	// 	id_school_year: id_school
-	// },
-	// function (data) {
-	// 	document.getElementById("academic").innerHTML = data;
-	// });
-
-}
 
 function send_data_class() {
 	var id_school = show_selected_id('selector');
@@ -86,13 +64,21 @@ function send_data_class() {
 	console.log("Năm finish:" + year_last);
 }
 
+function getIndex(id)
+{
+	var selector = document.getElementById(id);
+	return selector.selectedIndex;
+}
+
 function getClassChart() {
 
 	console.log("haha");
 	var id_school = show_selected_id('selector');
 	var id_academic = show_selected_id('academic');
 	var id_class = show_selected_id('class');
-
+	var class_years = parseInt(show_selected_id('year'));
+	var class_year_value = class_years + '-' + (class_years +1);
+	var yearIndex = getIndex('year');
 	$.ajax({
 		url: 'data/getClassEyesight',
 		type: 'GET',
@@ -100,14 +86,16 @@ function getClassChart() {
 		data: { 
 			schoolID: id_school,
 			academicID: id_academic,
-			classID: id_class
+			classID: id_class,
+			class_year: class_year_value,
+			yearIndex: yearIndex
 		},
 		success: function(data){
 			
 			if (data.length == 0) {
 				resetCanvas("Không có dữ liệu");
 			}
-			else {console.log("độ dai class: " + data.length);
+			else {console.log("Dữ liệu: " + data);
 				resetCanvas("");
 				var eyesight = []; // tổng hợp độ cận
 				var percent = []; // tính phần trăm
@@ -134,7 +122,8 @@ function getClassChart() {
 						dataType: 'json',
 						data: {
 							check: eyesight[i], // gửi dữ liệu lên server
-							classID: 6
+							classID: id_class,
+							class_year: class_year_value
 						},
 						async: false,
 						type: 'GET',
