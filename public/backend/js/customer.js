@@ -78,10 +78,10 @@ function getClassChart() {
 		success: function(data){
 			
 			if (data.length == 0) {
-				resetCanvas("Không có dữ liệu");
+				resetCanvas("Không có dữ liệu", "graph-container", "pie-chart");
 			}
 			else {console.log("độ dai class: " + data.length);
-			resetCanvas("");
+			resetCanvas("", "graph-container", "pie-chart");
 				var eyesight = []; // tổng hợp độ cận
 				var percent = []; // tính phần trăm
 				for (var i in data) {
@@ -171,10 +171,10 @@ function getClassChart() {
 };
 
 // Distroy old Canvas
-function resetCanvas(text) {
-	$('#pie-chart').remove(); // this is my <canvas> element
-	$('#graph-container').append('<canvas id="pie-chart"><canvas>');
-	canvas = document.querySelector('#pie-chart');
+function resetCanvas(text, graph_text, chart_text) {
+	$('#'+chart_text).remove(); // this is my <canvas> element
+	$('#'+graph_text).append('<canvas id='+chart_text+'><canvas>');
+	canvas = document.querySelector('#' + chart_text);
 	ctx = canvas.getContext('2d');
 	ctx.canvas.width = 800; // resize to parent width
 	ctx.canvas.height = 400; // resize to parent height
@@ -185,20 +185,7 @@ function resetCanvas(text) {
 	ctx.fillText(text, x, y);
 };
 
-// Distroy old Canvas
-function resetCanvasStudent(text) {
-	$('#line-chart').remove(); // this is my <canvas> element
-	$('#chart-container').append('<canvas id="line-chart"><canvas>');
-	canvas = document.querySelector('#line-chart');
-	ctx = canvas.getContext('2d');
-	ctx.canvas.width = 800; // resize to parent width
-	ctx.canvas.height = 400; // resize to parent height
-	var x = canvas.width / 2;
-	var y = canvas.height / 2;
-	ctx.font = '30pt Verdana';
-	ctx.textAlign = 'left';
-	ctx.fillText(text, x, y);
-};
+
 
 // ----------------------------- StudentChart ------------------------------
 function getStudentChart() {
@@ -218,11 +205,11 @@ function getStudentChart() {
 		{
 			if(data.length == 0)
 			{
-				resetCanvasStudent("Không có dữ liệu");
+				resetCanvas("Không có dữ liệu", "chart-container", "line-chart");
 			}
 			else
 			{
-				resetCanvasStudent("");
+				resetCanvas("", "chart-container", "line-chart");
 				console.log("Đây là của 1 học sinh: " + data);
 				var eyesight = [];
 				var year = [];
