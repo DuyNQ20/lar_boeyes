@@ -23,8 +23,14 @@ Route::post('/postLogin', ['as' => 'postLogin', 'uses' => "Auth\AuthController@p
 // Phần Doctor
 Route::group(['prefix' => 'doctor'], function () {
     Route::get('/', ['as' => 'doctor.index', 'uses' => "Backend\Doctor\DoctorController@index"]);
+
+    // ---------- Độ cận từng học sinh -----------
     Route::get('/student-one', "Backend\Doctor\DoctorController@studentOne");
+
+    // ---------- Độ cận của một lớp học -----------
     Route::get('/class-one', "Backend\Doctor\DoctorController@classOne");
+    Route::get('/class-many-years', "Backend\Doctor\DoctorController@classManyYears");
+
 
     // Phần get dữ liệu vào combox
     Route::group(['prefix' => 'data'], function () {

@@ -32,7 +32,7 @@
 							<ul class="sub-menu">
 								<li><a href="{!! url('doctor/student-one') !!}" >Thống kê của một học sinh</a></li>
 								<li><a href="{!! url('doctor/class-one') !!}">Thống kê của một lớp</a></li>
-								<li><a href="SoSanhCacTruong.html">Độ cận TB các trường</a></li>
+								<li><a href="{!! url('doctor/class-many-years') !!}">Thống kê của một lớp theo từng năm</a></li>
 								<li><a href="SoSanhCacTruong.html">TK các trường theo năm</a></li>
 							</ul>
 						</li>

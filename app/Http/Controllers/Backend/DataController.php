@@ -54,9 +54,10 @@ class DataController extends Controller
 			['tbl_class.school_id', '=', $request->id_school],
 			['tbl_academicyear.academicYear_id', '=', $request->id_academic]
 		])
+		->orderBy('tbl_class.class_name', 'asc')
 		->get();
 		foreach ($class as $row) {
-			$giatri = "$row->class_name";
+			$giatri = strtoupper("$row->class_name");
 			$string = $string . "<option value='$row->class_id'>$giatri</option>";
 		}
 		echo json_encode($string);
@@ -64,23 +65,23 @@ class DataController extends Controller
 
 	public function getClassEyesight(Request $request)
 	{
-			$ClassEyesight = DB::table('tbl_school')
-			->join('tbl_academicyear', 'tbl_school.school_id','=','tbl_academicyear.school_id')
-			->join('tbl_student','tbl_student.academicYear_id','=','tbl_academicyear.academicYear_id')
-			->join('tbl_eyesight','tbl_student.stu_id','=','tbl_eyesight.stu_id')
-			->where([
-				['tbl_school.school_id', '=', $request->schoolID],
-				['tbl_academicyear.academicYear_id', '=', $request->academicID],
-				['tbl_eyesight.class_id', '=', $request->classID]
-			])
-			->select('tbl_eyesight.eyesight_diopter')
-			->get();
+			// $ClassEyesight = DB::table('tbl_school')
+			// ->join('tbl_academicyear', 'tbl_school.school_id','=','tbl_academicyear.school_id')
+			// ->join('tbl_student','tbl_student.academicYear_id','=','tbl_academicyear.academicYear_id')
+			// ->join('tbl_eyesight','tbl_student.stu_id','=','tbl_eyesight.stu_id')
+			// ->where([
+			// 	['tbl_school.school_id', '=', $request->schoolID],
+			// 	['tbl_academicyear.academicYear_id', '=', $request->academicID],
+			// 	['tbl_eyesight.class_id', '=', $request->classID]
+			// ])
+			// ->select('tbl_eyesight.eyesight_diopter')
+			// ->get();
 
 		
-		// $ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
-		// 	INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
-		// 	INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
-		// 	WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID AND tbl_eyesight.class_id= $request->classID");
+		$ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
+			INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
+			INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
+			WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID AND tbl_eyesight.class_id= $request->classID");
 		
 		echo json_encode($ClassEyesight);
 	}
