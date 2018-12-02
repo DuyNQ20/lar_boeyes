@@ -88,6 +88,7 @@ function send_data_class() {
 
 function getClassChart() {
 
+	console.log("haha");
 	var id_school = show_selected_id('selector');
 	var id_academic = show_selected_id('academic');
 	var id_class = show_selected_id('class');
@@ -102,11 +103,11 @@ function getClassChart() {
 			classID: id_class
 		},
 		success: function(data){
-			console.log("class chart: " + data.length);
+			
 			if (data.length == 0) {
 				resetCanvas("Không có dữ liệu");
 			}
-			else {
+			else {console.log("độ dai class: " + data.length);
 				resetCanvas("");
 				var eyesight = []; // tổng hợp độ cận
 				var percent = []; // tính phần trăm
@@ -132,12 +133,13 @@ function getClassChart() {
 						//url: '../data.php',
 						dataType: 'json',
 						data: {
-							check: eyesight[i] // gửi dữ liệu lên server
+							check: eyesight[i], // gửi dữ liệu lên server
+							classID: 6
 						},
 						async: false,
 						type: 'GET',
 						success: function (response) {
-							console.log("số lượng lớp học:" + response.length);
+							console.log("eyesight: " + response.length);
 							var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
 							percent.push(phantram); // thêm vào mảng 
 						}
