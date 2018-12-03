@@ -21,7 +21,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+		"files" : [
+			"app/Quangduy/myfunctions.php"
+		]
     },
     "autoload-dev": {
         "classmap": [
