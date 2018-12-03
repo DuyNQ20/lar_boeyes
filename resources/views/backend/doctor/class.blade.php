@@ -54,7 +54,7 @@
 
 
 
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>
 	$(document).ready(function () {
 		send_data(); // gọi hàm thực hiện load dữ liệu mặc định combobox

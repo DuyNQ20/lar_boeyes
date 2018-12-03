@@ -40,10 +40,9 @@ Route::group(['prefix' => 'doctor'], function () {
         Route::get('/getClass', "Backend\DataController@getClass");
         Route::get('/getClassEyesight', "Backend\DataController@getClassEyesight");
         Route::get('/getEyesight', "Backend\DataController@getEyesight");
-        
+
         // Độ tận của một lớp học theo từng năm
         Route::get('/getClassManyYearsEyesight', "Backend\DataController@getClassManyYearsEyesight");
-        Route::get('/getClassManyEyesight', "Backend\DataController@getClassManyEyesight");
     });
 
 });

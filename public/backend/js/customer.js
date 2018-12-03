@@ -1,4 +1,4 @@
-﻿
+
 
 // ----------------------------- ClassChart ------------------------------
 
@@ -197,28 +197,26 @@ function getClassManyYearsChart() {
 		year.push(i + '-' + ( parseInt(i)+1));
 	}
 	console.log("năm: " + year);
-	for (var j = 0; j < year.length; j++) {
-		
-		$.ajax({
-			url: 'data/getClassManyEyesight',
-			type: 'GET',
-			dataType: 'json',
-			async: false,
-			data: { 
-				schoolID: id_school,
-				academicID: id_academic,
-				classID: id_class,
-				class_year: year[j]
-			},
-			success: function(data){
-				console.log("du lieu data: " + data.length);
-				resetCanvas("", "chart-container", "line-chart");
-				var eyesight = [];
-				var percent = [];
-				var dem = 0; 
-				for (var i in data) {
-					var dem = 0;
-					for (var j = eyesight.length - 1; j >= 0; j--) {
+
+	$.ajax({
+		url: 'data/getClassEyesight',
+		type: 'GET',
+		dataType: 'json',
+		async: false,
+		data: { 
+			schoolID: id_school,
+			academicID: id_academic,
+			classID: id_class
+		},
+		success: function(data){
+			console.log("du lieu data: " + data.length);
+			resetCanvas("", "chart-container", "line-chart");
+			var eyesight = [];
+			
+			var dem = 0; 
+			for (var i in data) {
+				var dem = 0;
+				for (var j = eyesight.length - 1; j >= 0; j--) {
 
 						if (eyesight[j] == data[i].eyesight_diopter) // kiểm tra độ cận đã có trong mảng
 						{
@@ -232,105 +230,105 @@ function getClassManyYearsChart() {
 					}
 				}
 				eyesight = eyesight.sort();
+				var dulieu = [];
+				var mang = {};
+				var backgroundColor = ['#36a2eb','#cc65fe','#ffce56',"#ff6384","#2aac3f","#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#ff9f40", "#ff6384", "#3f51b5", "#79df29", "#607926", "#cddc39"];
 				for (var j = 0; j < year.length; j++) {
+					var percent = [];
+					var dem = 0;
 					for (var i = 0; i < eyesight.length; i++) {
 						$.ajax({
 							url: 'data/getClassManyYearsEyesight',
 							dataType: 'json',
 							data: {
-							check: eyesight[i], // gửi dữ liệu lên server
-							classID: id_class, 
-							class_year: year[j]
-						},
-						async: false,
-						type: 'GET',
-						success: function (response) {
-							console.log("eyesight: " + response.length);
-							var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
-							percent.push(phantram); // thêm vào mảng 
-						}
-					});
+								check: eyesight[i], // gửi dữ liệu lên server
+								academicID: id_academic,
+								class_year: year[j]
+							},							
+							async: false,
+							type: 'GET',
+							success: function (response) {
+								console.log("eyesight: " + response.length);
+									var phantram = ((response.length * 100) / data.length); // tính phần trăm với độ cận eyesight[i]
+									
+									percent.push(phantram); // thêm vào mảng 
+								}
+							});
 					}
+					mang = {
+						'label': year[j],
+						'backgroundColor': backgroundColor[j],
+						'borderColor': backgroundColor[j],
+						'hoverBackgroundColor': '#fff',
+						'hoverBorderColor': '#666666',
+						'fill' : false,
+						'data': percent
+					};
+					dulieu.push(mang);
 				}
-				
-			// for (var i in data) {
 
-			// 	if (dem < 1) {
-			// 		name.push(data[i].stu_name);
-			// 		dem++;
-			// 	}
 
-			// 	eyesight.push(data[i].eyesight_diopter);
-			// 	year.push(data[i].eyesight_date);
-
-			// }
-			var dulieu = [];
-			var backgroundColor = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#ff9f40", "#ff6384", "#3f51b5", "#79df29", "#607926", "#cddc39"];
-			for (var i = 0; i < year.length; i++) {
-				var mang = {
-					'label': year[i], 
-					'backgroundColor': backgroundColor[i],
-					'borderColor': backgroundColor[i],
-					'hoverBackgroundColor': '#CCCCCC',
-					'hoverBorderColor': '#666666',
-					'fill' : false,
-					'data': percent
+				var chartdata = {
+					labels: eyesight,
+					datasets: dulieu
 				};
+				var graphTarget = $("#line-chart");
+				var eyesight_show;
+				barGraph = new Chart(graphTarget, {
+					type: 'line',
+					data: chartdata,
 
-				dulieu.push(mang);
-			}
-			
-
-			var chartdata = {
-				labels: eyesight,
-				datasets: dulieu
-			};
-
-
-
-			var graphTarget = $("#line-chart");
-
-			barGraph = new Chart(graphTarget, {
-				type: 'line',
-				data: chartdata,
-				options: {
-					responsive: true,
-					title: {
-						display: true,
-						text: 'Biểu đồ độ cận'
-					},
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
+					options: {
+						color: ['#ff0000'],
+						responsive: true,
+						responsiveAnimationDuration: 0,
+						title: {
 							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: 'Năm'
+							text: 'Biểu đồ độ cận'
+						},
+						tooltips: {
+							 mode: 'x',
+							 intersect: false,
+						//	 axis: 'x',
+							callbacks: {
+								label: function (tooltipItems, data) {
+									eyesight_show = data.labels[tooltipItems.index];
+									return data.datasets[tooltipItems.datasetIndex].label +
+									" : " +
+									data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index] +
+									'%';
+								},
+								title: function () {
+									return "Độ cận: " + eyesight_show;
+								}
 							}
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: false
+						},
+						scales: {
+							xAxes: [{
+								scaleLabel: {
+									display: true,
+									labelString: 'Độ cận'
+								}
+							}],
+							yAxes: [{
 								display: true,
-								labelString: 'Độ cận'
-							}
-						}]
+								scaleLabel: {
+									display: true,
+									labelString: 'Phần trăm'
+								}
+							}]
+						}
 					}
-				}
-			});
-		}
+				});
+			}
 
-	});
-	}
+		});
 
-	
+
 }
 
 // Distroy old Canvas
