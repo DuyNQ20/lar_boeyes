@@ -40,14 +40,14 @@
 				</div>
 				<div class="form-group col-md-12 ">
 					<div class="col-md-2"></div>
-					<input   type="button" onclick="getClassChart()" class="btn btn-primary col-md-2" value="Xem" name="">
+					<input   type="button" onclick="getClassManyYearsChart()" class="btn btn-primary col-md-2" value="Xem" name="">
 				</div>
 
 			</form>
 		</div>
 	</div>
-	<div id="graph-container">
-		<canvas id="pie-chart" width="800" height="450"></canvas>
+	<div id="chart-container">
+		<canvas id="line-chart"></canvas>
 	</div>
 
 </div>

@@ -99,4 +99,23 @@ class DataController extends Controller
 		$student = DB::select("SELECT * FROM `tbl_eyesight` WHERE class_id = $request->classID AND eyesight_diopter = $request->check");
 		echo json_encode($student) ;
 	}
+
+	public function getClassManyEyesight(Request $request)
+	{
+		$ClassEyesight = DB::select("SELECT tbl_eyesight.eyesight_diopter FROM tbl_school INNER JOIN tbl_academicyear ON tbl_school.school_id=tbl_academicyear.school_id
+			INNER JOIN tbl_student ON tbl_student.academicYear_id=tbl_academicyear.academicYear_id
+			INNER JOIN tbl_eyesight ON tbl_student.stu_id=tbl_eyesight.stu_id
+            INNER JOIN tbl_class ON tbl_eyesight.class_id=tbl_class.class_id
+			WHERE tbl_school.school_id=$request->schoolID AND tbl_academicyear.academicYear_id=$request->academicID AND tbl_eyesight.class_id= $request->classID AND tbl_class.class_year = '$request->class_year'");
+		
+		echo json_encode($ClassEyesight);
+	}
+
+
+
+	public function getClassManyYearsEyesight(Request $request)
+	{
+		$student = DB::select("SELECT * FROM `tbl_eyesight` INNER JOIN tbl_class ON tbl_eyesight.class_id = tbl_class.class_id WHERE tbl_eyesight.class_id = $request->classID AND tbl_eyesight.eyesight_diopter = $request->check AND tbl_class.class_year='$request->class_year'");
+		echo json_encode($student) ;
+	}
 }
