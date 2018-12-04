@@ -1,8 +1,32 @@
 @extends('backend.doctor.layout')
 @section('content-doctor')
+
+{{-- <style type="text/css">
+#loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.25) url('../public/Wedges-2.3s-200px.svg') no-repeat center center;
+	z-index: 9999;
+}
+.icon-load{
+    position: relative;
+}
+</style>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery('#loading').fadeOut(0);
+	});
+</script> --}}
+</script>
+
 <!-- bang bieu do -->
+
 <div class="panel panel-primary" >
+
 	<div class="panel panel-heading boxheader">
+
 	Biểu diễn độ cận thị của học sinh của một lớp học</div>
 	<div class="panel panel-body">
 		<div class="seach-school">
@@ -46,13 +70,15 @@
 			</form>
 		</div>
 	</div>
-	<div id="graph-container">
+
+	<div id="graph-container" class="icon-load">
+		<div id="loading"></div>
 		<canvas id="pie-chart" width="800" height="450"></canvas>
 	</div>
 
+
+
 </div>
-
-
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>

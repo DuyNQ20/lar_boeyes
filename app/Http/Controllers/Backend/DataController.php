@@ -105,7 +105,7 @@ class DataController extends Controller
 
 	public function getClassManyYearsEyesight(Request $request)
 	{
-		$query = "SELECT * FROM tbl_eyesight INNER JOIN tbl_class ON tbl_eyesight.class_id = tbl_class.class_id INNER JOIN tbl_academicyear ON tbl_class.academicYear_id = tbl_academicyear.academicYear_id WHERE tbl_eyesight.eyesight_diopter = $request->check  AND tbl_class.class_year='$request->class_year' AND tbl_academicyear.academicYear_id = $request->academicID";
+		$query = "SELECT * FROM tbl_eyesight INNER JOIN tbl_class ON tbl_eyesight.class_id = tbl_class.class_id INNER JOIN tbl_academicyear ON tbl_class.academicYear_id = tbl_academicyear.academicYear_id WHERE tbl_eyesight.eyesight_diopter = $request->check   AND tbl_academicyear.academicYear_id = $request->academicID AND tbl_class.class_name = '$request->class_name'" ;
 		$student = DB::select($query);
 		echo json_encode($student) ;
 	}

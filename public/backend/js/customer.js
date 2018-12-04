@@ -1,5 +1,4 @@
 
-
 // ----------------------------- ClassChart ------------------------------
 
 function show_selected_id(id) {
@@ -179,6 +178,8 @@ function getClassChart() {
 			}
 		}
 	});
+
+		
 }
 
 
@@ -232,18 +233,23 @@ function getClassManyYearsChart() {
 				eyesight = eyesight.sort();
 				var dulieu = [];
 				var mang = {};
+				var lop = 1;
 				var backgroundColor = ['#36a2eb','#cc65fe','#ffce56',"#ff6384","#2aac3f","#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#ff9f40", "#ff6384", "#3f51b5", "#79df29", "#607926", "#cddc39"];
 				for (var j = 0; j < year.length; j++) {
 					var percent = [];
 					var dem = 0;
+					
+					var class_name = (lop++) + "a";
+					console.log("tên lớp: " + class_name);
 					for (var i = 0; i < eyesight.length; i++) {
+						console.log("Độ cận thứ: " + eyesight[i]);
 						$.ajax({
 							url: 'data/getClassManyYearsEyesight',
 							dataType: 'json',
 							data: {
 								check: eyesight[i], // gửi dữ liệu lên server
 								academicID: id_academic,
-								class_year: year[j]
+								class_name: class_name
 							},							
 							async: false,
 							type: 'GET',
